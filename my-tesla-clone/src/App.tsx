@@ -1,56 +1,55 @@
 import React from 'react'
-import './App.css'
-import Home from './Home'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-import NavDropdown from 'react-bootstrap/NavDropdown'
-import {Link, Routes, Route} from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { Link, Routes, Route } from 'react-router-dom'
+import './App.css'
+import Home from './Home'
+import About from './About'
+
+import { useSelector } from 'react-redux'
+import { selectCars } from './features/menu/carSlice'
 
 function App() {
+    const cars = useSelector(selectCars)
+
     return (
         <div className="App">
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand className='logo'>React-Bootstrap</Navbar.Brand>
+                    <Navbar.Brand>
+                        <img
+                            className="logo"
+                            src="/images/0x0-Tesla_Wordmark_20_Black.png"
+                            alt="logo"
+                        />
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="#features">Features</Nav.Link>
-                            <Nav.Link href="#pricing">Pricing</Nav.Link>
-                            <NavDropdown
-                                title="Dropdown"
-                                id="collasible-nav-dropdown"
-                            >
-                                <NavDropdown.Item href="#action/3.1">
-                                    Action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">
-                                    Something
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">
-                                    Separated link
-                                </NavDropdown.Item>
-                            </NavDropdown>
+                            {cars &&
+                                cars.map((car: string, index: string) => (
+                                    <Link key={index} id="Nav.Link" to={'/'}>
+                                        {car}
+                                    </Link>
+                                ))}
                         </Nav>
                         <Nav>
-                            <Nav.Link href="#deets">More deets</Nav.Link>
-                            <Nav.Link eventKey={2} href="#memes">
-                                Dank memes
-                            </Nav.Link>
+                            <Link id="Nav.link" to={'/'}>
+                                Model Y
+                            </Link>
+                            <Link id="Nav.link" to={'/about'}>
+                                About
+                            </Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
             <Routes>
-                <Route path="/" />
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
             </Routes>
-            <Home />
         </div>
     )
 }

@@ -45,6 +45,7 @@ function Home() {
         RButton={"Learn More"}
 
         />
+
     </Container>
   )
 }
@@ -52,4 +53,5 @@ function Home() {
 export default Home
 
 const Container = styled.div`
+margin-top:-10vh;
 `
